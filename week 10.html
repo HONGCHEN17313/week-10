@@ -3244,9 +3244,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="homework">Homework</h2>
 <p>Calculate odds ratio of 4 variables.</p>
 </section>
-<section id="variale-1" class="level2">
-<h2 class="anchored" data-anchor-id="variale-1">Variale 1</h2>
-<p>What’s the odds ratio of having a college degree being a woman?</p>
+<section id="variable-1" class="level2">
+<h2 class="anchored" data-anchor-id="variable-1">Variable 1</h2>
+<p>having a college degree &amp; being a woman</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gss2018 <span class="ot">&lt;-</span> <span class="fu">gss_get_yr</span>(<span class="dv">2018</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -3323,12 +3323,13 @@ log(\frac{P(degree = 1)}{1-P(degree =1)}) = -.708-.047*gender
 <pre><code>[1] 0.9540874</code></pre>
 </div>
 </div>
-<p>OR = .9541 When gender changes from women to men, the odds of having a college degree decrease by 4.6%.</p>
+<p>OR = .9541 being a man decreases one’s odds of having a college degree decrease by 4.6% times.</p>
 </section>
 </section>
 <section id="variable-2" class="level2">
 <h2 class="anchored" data-anchor-id="variable-2">Variable 2</h2>
-<p>What is the odds ratio of late first birth age for those with a college degree? We define late first birth as having a first child at age 28 or older.</p>
+<p>first birth age &amp; college degree</p>
+<p>We define late first birth as having a first child at age 28 or older.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>firstkid <span class="ot">&lt;-</span> gss2018 <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(agekdbrn, educ) <span class="sc">|&gt;</span></span>
@@ -3391,12 +3392,12 @@ log(\frac{P(latebirth = 1)}{1-P(latebirth =1)}) = -1.5429 + 1.5628*degree
 <pre><code>[1] 4.772165</code></pre>
 </div>
 </div>
-<p>OR = 4.77, the odds of late first birth having a college degree is 4.77 times greater than the odds of late first birth not having a college degree.</p>
+<p>OR = 4.77, having a college degree increases one’s odds of late first birth by 4.77 times compared to those without college degree.</p>
 </section>
 </section>
 <section id="variable-3" class="level2">
 <h2 class="anchored" data-anchor-id="variable-3">Variable 3</h2>
-<p>What’s the odds ratio of having a college degree of people who born in the U.S compared to those not?</p>
+<p>having a college degree &amp; born in the U.S</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>citi <span class="ot">&lt;-</span> gss2018 <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(born, degree) <span class="sc">|&gt;</span></span>
@@ -3459,12 +3460,12 @@ log(\frac{P(college = 1)}{1-P(college =1)}) = -.8097 - .0248*BornUS
 <pre><code>[1] 0.975505</code></pre>
 </div>
 </div>
-<p>OR = .9755. It indicates that the odds ratio of having a college degree decreases by 2.4% when they are born in the U.S compared to those not.</p>
+<p>OR = .9755. It indicates that born in US decreases one’s odds of having a college degree by 2.4% times compared to those not born in the US.</p>
 </section>
 </section>
 <section id="variable-4" class="level2">
 <h2 class="anchored" data-anchor-id="variable-4">Variable 4</h2>
-<p>What’s the odds ratio of people having college degree if their father has a college degree compared to those not?</p>
+<p>having college degree &amp; father having a college degree</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fathered <span class="ot">&lt;-</span> gss2018 <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(paeduc, degree) <span class="sc">|&gt;</span></span>
@@ -3527,7 +3528,7 @@ log(\frac{P(college = 1)}{1-P(college =1)}) = -.8960 + 1.2819*Pacollege
 <pre><code>[1] 3.60348</code></pre>
 </div>
 </div>
-<p>OR = 3.60, which indicates that people whose father has a college degree has 3.6 greater times to have college degree compares to those whose father has no college degree.</p>
+<p>OR = 3.60, which indicates that one’s father having a college degree increases one’s odds of having college degree by 3.6 times compares to those whose father has no college degree.</p>
 </section>
 </section>
 

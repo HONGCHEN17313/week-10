@@ -21,9 +21,9 @@ library(tidyverse)
 
 ```
 
-## Variale 1
+## Variable 1
 
-What's the odds ratio of having a college degree being a woman?
+having a college degree & being a woman
 
 ```{r}
 gss2018 <- gss_get_yr(2018)
@@ -85,11 +85,13 @@ $$
 exp(-.047)
 ```
 
-OR = .9541 When gender changes from women to men, the odds of having a college degree decrease by 4.6%.
+OR = .9541 being a man decreases one's odds of having a college degree decrease by 4.6% times.
 
 ## Variable 2
 
-What is the odds ratio of late first birth age for those with a college degree? We define late first birth as having a first child at age 28 or older.
+first birth age & college degree
+
+We define late first birth as having a first child at age 28 or older.
 
 ```{r}
 firstkid <- gss2018 |>
@@ -134,11 +136,11 @@ $$
 exp(1.5628)
 ```
 
-OR = 4.77, the odds of late first birth having a college degree is 4.77 times greater than the odds of late first birth not having a college degree. 
+OR = 4.77, having a college degree increases one's odds of late first birth by 4.77 times compared to those without college degree.
 
 ## Variable 3
 
-What's the odds ratio of having a college degree of people who born in the U.S compared to those not?
+having a college degree & born in the U.S
 
 ```{r}
 citi <- gss2018 |>
@@ -183,11 +185,11 @@ $$
 exp(-.0248)
 ```
 
-OR = .9755. It indicates that the odds ratio of having a college degree decreases by 2.4% when they are born in the U.S compared to those not.
+OR = .9755. It indicates that born in US decreases one's odds of having a college degree by 2.4% times compared to those not born in the US.
 
 ## Variable 4
 
-What's the odds ratio of people having college degree if their father has a college degree compared to those not?
+having college degree & father having a college degree
 
 ```{r}
 fathered <- gss2018 |>
@@ -231,4 +233,4 @@ $$
 exp(1.2819)
 ```
 
-OR = 3.60, which indicates that people whose father has a college degree has 3.6 greater times to have college degree compares to those whose father has no college degree.
+OR = 3.60, which indicates that one's father having a college degree increases one's odds of having college degree by 3.6 times compares to those whose father has no college degree.
