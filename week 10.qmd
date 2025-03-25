@@ -1,0 +1,209 @@
+---
+title: "week 10"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Homework
+
+Calculate odds ratio of 4 variables.
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| cashe: false
+
+library(gssr)
+library(tidyverse)
+
+```
+
+## Variale 1
+
+What's the odds ratio of having a college degree being a woman?
+
+```{r}
+gss2018 <- gss_get_yr(2018)
+gendereduc <- gss2018 |>
+  select(sex, educ) |>
+  mutate(gender = if_else(sex == 1 , 1, 0),
+         degree = if_else(educ >= 16, 1, 0)) |>
+  drop_na()
+```
+
+Outcome: having college degree(Yes=1 / No=0)
+
+Predictor:gender (Men=1 / Women=0)
+
+```{r}
+table(gendereduc$gender, gendereduc$degree)
+```
+
+Probability of being a woman $P(gender = 0)$ is `r 867/(867+715)`
+
+Probability of being a man $P(gender = 1)$ is `r 715/(867+715)`
+
+Odds of being a woman are: 
+
+$$
+\frac{P(gender=0)}{1- P(gender=0)} = \frac{0.5480}{1-0.5480} = 1.21
+$$ 
+
+Probability of having a college degree in the condition of being a woman $P(degree = 1 | gender = 0)$ is `r 427/(427+867)`
+
+Probability of having a college degree in the condition of being a man $P(degree = 1 | gender = 1)$ is `r 336/(715+336)`
+
+Odds ratio of two odds: 
+
+$$
+OR = \frac{\frac{P(degree = 1| gender = 0)}{1-P(degree =1|gender = 0)}} {\frac{P(degree = 1| gender = 1)}{1-P(degree =1|gender=1)}}
+$$ 
+
+Odds ratio = (0.33/(1-0.33))/(0.32/(1-0.32)) = `r (0.33/(1-0.33))/(0.32/(1-0.32))`
+
+#### Writing as a model
+
+$$
+log(\frac{P(degree = 1)}{1-P(degree =1)}) = \alpha + \beta(gender_i)
+$$
+
+```{r}
+mod1 <- glm(degree ~ gender,
+            data = gendereduc,
+            family = binomial(link = "logit"))
+summary(mod1)
+```
+
+$$
+log(\frac{P(degree = 1)}{1-P(degree =1)}) = -.708-.047*gender
+$$
+
+```{r}
+exp(-.047)
+```
+
+OR = .9541 When gender changes from women to men, the odds of having a college degree decrease by 4.6%.
+
+## Variable 2
+
+What is the odds ratio of late first birth age for those with a college degree? We define late first birth as having a first child at age 28 or older.
+
+```{r}
+firstkid <- gss2018 |>
+  select(agekdbrn, educ) |>
+  mutate(latebirth = if_else(agekdbrn >= 28, 1, 0), 
+         degree = if_else(educ >= 16, 1, 0)) |>
+  drop_na()
+```
+
+Outcome: late first birth age (Yes=1 / No=0)
+
+Predictor:having college degree(Yes=1 / No=0)
+
+```{r}
+table(firstkid$degree, firstkid$latebirth)
+```
+
+Probability of having late first birth in the condition of having a college degree $P(latebirth = 1 | degree = 1)$ is `r 253/(248+253)`
+
+Probability of having late first birth in the condition of not having a college degree $P(latebirth = 1 | degree = 0)$ is `r 205/(959+205)`
+
+OR = (.5050/(1-.5050))/(/.1761/(1-.1761)) = `r (.5050/(1-.5050))/(.1761/(1-.1761))`
+
+#### Writing as a model
+
+$$
+log(\frac{P(latebirth = 1)}{1-P(latebirth =1)}) = \alpha + \beta(degree_i)
+$$
+
+```{r}
+mod2 <- glm(latebirth ~ degree,
+            data = firstkid,
+            family = binomial(link = "logit"))
+summary(mod2)
+```
+
+$$
+log(\frac{P(latebirth = 1)}{1-P(latebirth =1)}) = -1.5429 + 1.5628*degree
+$$
+
+```{r}
+exp(1.5628)
+```
+
+OR = 4.77, the odds of late first birth having a college degree is 4.77 times greater than the odds of late first birth not having a college degree. 
+
+## Variable 3
+
+What's the odds ratio of having a college degree of people who born in the U.S compared to those not?
+
+```{r}
+citi <- gss2018 |>
+  select(born, degree) |>
+  mutate(BornUS = if_else(born == 1, 1, 0),
+         college = if_else(degree >= 3, 1, 0)) |>
+    drop_na() 
+```
+
+Outcome: college degree (Yes=1 / No=0)
+
+Predictor:whether born in U.S. (Yes=1 / No=0)
+
+```{r}
+table(citi$BornUS, citi$college)
+```
+
+Probability of having college degree in the condition of born in US $P(college = 1 | BornUS = 1)$ is `r 619/(1426+619)`
+
+Probability of having college degree in the condition of not born in US $P(college = 1 | BornUS = 0)$ is `r 93/(209+93)`
+
+OR = (.3027/(1-.3027))/(.3079/(1-.3079)) = `r (.3027/(1-.3027))/(.3079/(1-.3079))`
+
+#### Writing as a model
+
+$$
+log(\frac{P(college = 1)}{1-P(college =1)}) = \alpha + \beta(BornUS_i)
+$$
+
+```{r}
+mod3 <- glm(college ~ BornUS,
+            data = citi,
+            family = binomial(link = "logit"))
+summary(mod3)
+```
+
+$$
+log(\frac{P(college = 1)}{1-P(college =1)}) = -.8097 - .0248*BornUS
+$$
+
+```{r}
+exp(-.0248)
+```
+
+OR = .9755. It indicates that the odds ratio of having a college degree decreases by 2.4% when they are born in the U.S compared to those not.
+
+## Variable 4
+
+What's the odds ratio of people having college degree if their father has a college degree compared to those not?
+
+```{r}
+fathered <- gss2018 |>
+  select(paeduc, degree) |>
+  mutate(Pacollege = if_else(paeduc >= 16, 1, 0),
+         college = if_else(degree >= 3, 1, 0)) |>
+    drop_na() 
+```
+Outcome: college degree (Yes=1 / No=0)
+
+Predictor:Father having college degree (Yes=1 / No=0)
+
+```{r}
+table(fathered$Pacollege, fathered$college)
+```
+
+Probability of having college degree in the condition of father having a college degree $P(college = 1 | Pacollege = 1)$ is `r 228/(155+228)`
+
+Probability of having college degree in the condition of father not having a college degree $P(college = 1 | Pacollege = 0)$ is `r 378/(926+378)`
