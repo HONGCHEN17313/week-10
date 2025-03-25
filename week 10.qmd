@@ -207,3 +207,28 @@ table(fathered$Pacollege, fathered$college)
 Probability of having college degree in the condition of father having a college degree $P(college = 1 | Pacollege = 1)$ is `r 228/(155+228)`
 
 Probability of having college degree in the condition of father not having a college degree $P(college = 1 | Pacollege = 0)$ is `r 378/(926+378)`
+
+OR = (.5953/(1-.5953))/(.2899/(1-.2899)) = `r (.5953/(1-.5953))/(.2899/(1-.2899))`
+
+#### Writing as a model
+
+$$
+log(\frac{P(college = 1)}{1-P(college =1)}) = \alpha + \beta(Pacollege_i)
+$$
+
+```{r}
+mod4 <- glm(college ~ Pacollege,
+            data = fathered,
+            family = binomial(link = "logit"))
+summary(mod4)
+```
+
+$$
+log(\frac{P(college = 1)}{1-P(college =1)}) = -.8960 + 1.2819*Pacollege
+$$
+
+```{r}
+exp(1.2819)
+```
+
+OR = 3.60, which indicates that people whose father has a college degree has 3.6 greater times to have college degree compares to those whose father has no college degree.

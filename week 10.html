@@ -3485,6 +3485,50 @@ log(\frac{P(college = 1)}{1-P(college =1)}) = -.8097 - .0248*BornUS
 </div>
 <p>Probability of having college degree in the condition of father having a college degree <span class="math inline">\(P(college = 1 | Pacollege = 1)\)</span> is 0.5953003</p>
 <p>Probability of having college degree in the condition of father not having a college degree <span class="math inline">\(P(college = 1 | Pacollege = 0)\)</span> is 0.2898773</p>
+<p>OR = (.5953/(1-.5953))/(.2899/(1-.2899)) = 3.6030806</p>
+<section id="writing-as-a-model-3" class="level4">
+<h4 class="anchored" data-anchor-id="writing-as-a-model-3">Writing as a model</h4>
+<p><span class="math display">\[
+log(\frac{P(college = 1)}{1-P(college =1)}) = \alpha + \beta(Pacollege_i)
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(college <span class="sc">~</span> Pacollege,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> fathered,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = college ~ Pacollege, family = binomial(link = &quot;logit&quot;), 
+    data = fathered)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.89598    0.06104  -14.68   &lt;2e-16 ***
+Pacollege    1.28190    0.12068   10.62   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2203.1  on 1686  degrees of freedom
+Residual deviance: 2087.1  on 1685  degrees of freedom
+AIC: 2091.1
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+log(\frac{P(college = 1)}{1-P(college =1)}) = -.8960 + 1.2819*Pacollege
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fl">1.2819</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.60348</code></pre>
+</div>
+</div>
+<p>OR = 3.60, which indicates that people whose father has a college degree has 3.6 greater times to have college degree compares to those whose father has no college degree.</p>
+</section>
 </section>
 
 </main>
